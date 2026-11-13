@@ -3,64 +3,66 @@
 <head>
 <meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Корзина — BEIGE BOX</title>
+<title>Корзина — Beige Box</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
-<link rel="stylesheet" href="css/style.css?v=2">
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body data-page="cart">
 <div id="site-header"></div>
-<div class="wrap page-head"><div class="crumbs"><a href="index.html">Главная</a> / Корзина</div><h1 style="font-size:clamp(30px,3.4vw,44px)">Корзина</h1></div>
-<div class="wrap cart-grid" id="cart"></div>
+
+<main>
+  <div class="wrap page-head">
+    <div class="crumbs"><a href="index.html">Главная</a> / Корзина</div>
+    <h1>Корзина</h1>
+    <p class="sub" id="sub"></p>
+  </div>
+  <div class="wrap cart-grid" id="cart"></div>
+</main>
+
 <div id="site-footer"></div>
-<script src="js/products.js?v=2"></script>
-<script src="js/main.js?v=2"></script>
+<script src="js/products.js?v=1"></script>
+<script src="js/main.js?v=1"></script>
 <script>
 function paintCart() {
   const c = cartRead();
-  const box = document.getElementById('cart');
+  const box = document.getElementById('cart'), sub = document.getElementById('sub');
   if (!c.length) {
-    box.innerHTML = `<div class="empty" style="grid-column:1/-1"><h3 style="margin-bottom:8px">В&nbsp;корзине пока пусто</h3><p class="muted">Начните с&nbsp;подбора подарка&nbsp;— по&nbsp;получателю, поводу и&nbsp;бюджету.</p><a class="btn" href="index.html#podbor" style="margin-top:10px">Подобрать подарок</a></div>`;
+    sub.textContent = '';
+    box.innerHTML = `<div class="empty"><h3>В&nbsp;корзине пока пусто</h3><p>Загляните в&nbsp;каталог: там можно подобрать подарок по&nbsp;получателю, поводу и&nbsp;бюджету.</p><a class="btn" href="catalog.html">Перейти в&nbsp;каталог</a></div>`;
     return;
   }
-  const sum = cartSum(), disc = cartDiscount(), total = sum - disc;
-  box.innerHTML = `<div>${c.map((i, n) => { const p = byId(i.id); return `
-    <div class="line-item">
-      <a href="product.html?id=${p.id}"><img src="${p.photos[0]}" alt=""></a>
-      <div><h3>${p.name}</h3>
+  const n = cartCount(), sum = cartSum(), total = sum;
+  sub.textContent = `${n} ${plural(n, 'товар', 'товара', 'товаров')} на ${RUB(sum)}`;
+  box.innerHTML = `<div>${c.map((i, k) => { const p = byId(i.id); return `
+    <div class="li">
+      <a href="product.html?id=${p.id}"><img src="${p.photos[0]}" alt="${p.name}"></a>
+      <div><h3><a href="product.html?id=${p.id}">${nb(p.name)}</a></h3>
         ${i.size ? `<small>Размер: ${i.size}</small>` : ''}
-        ${i.note ? `<small>Открытка: «${i.note}»</small>` : ''}
+        ${i.note ? `<small>Открытка: «${i.note.replace(/</g, '&lt;')}»</small>` : ''}
         <small>${RUB(p.price)} за&nbsp;шт.</small></div>
       <div class="li-right">
-        <div class="qty" style="height:42px"><button type="button" onclick="chg(${n},-1)">−</button><span>${i.qty}</span><button type="button" onclick="chg(${n},1)">+</button></div>
         <b>${RUB(p.price * i.qty)}</b>
-        <button class="rm" type="button" onclick="chg(${n},-999)">Удалить</button>
+        <div class="qty sm"><button type="button" onclick="chg(${k},-1)" aria-label="Меньше">−</button><span>${i.qty}</span><button type="button" onclick="chg(${k},1)" aria-label="Больше">+</button></div>
+        <button class="rm" type="button" onclick="chg(${k},-999)">Удалить</button>
       </div>
-    </div>`; }).join('')}</div>
+    </div>`; }).join('')}
+    <a class="btn line" href="catalog.html" style="margin-top:10px">${ICON.back}Продолжить покупки</a>
+  </div>
   <aside class="summary">
-    <h3 style="margin-bottom:14px">Ваш заказ</h3>
-    <div class="r"><span>Товары, ${cartCount()}&nbsp;шт.</span><span>${RUB(sum)}</span></div>
-    ${disc ? `<div class="r"><span>Промокод ${PROMO.code}</span><span>−${RUB(disc)}</span></div>` : ''}
+    <h3>Ваш заказ</h3>
+    <div class="r"><span>Товары, ${n}&nbsp;шт.</span><span>${RUB(sum)}</span></div>
     <div class="r"><span>Доставка</span><span>${total >= FREE_FROM ? 'бесплатно' : 'по тарифу'}</span></div>
     <div class="r t"><span>Итого</span><span>${RUB(total)}</span></div>
-    <div class="promo"><input type="text" id="code" placeholder="Промокод" value="${disc ? PROMO.code : ''}" aria-label="Промокод"><button class="btn line" type="button" id="apply">${disc ? 'Убрать' : 'Применить'}</button></div>
-    <p class="muted" style="font-size:14px;margin:-6px 0 16px">Для&nbsp;примера работает код ${PROMO.code}&nbsp;— скидка ${PROMO.discount}%.</p>
-    <a class="btn wide" href="checkout.html">Оформить заказ</a>
+    <a class="btn wide" href="checkout.html">Оформить заказ ${ICON.arr}</a>
+    <p class="hint">Упаковка и&nbsp;открытка уже в&nbsp;цене набора. Соберём за&nbsp;<span class="nw">2–3</span>&nbsp;рабочих дня.</p>
   </aside>`;
-  document.getElementById('apply').onclick = () => {
-    if (disc) { promoSet(false); toast('Промокод убран'); }
-    else if (document.getElementById('code').value.trim().toUpperCase() === PROMO.code) { promoSet(true); toast('Промокод применён'); }
-    else { toast('Такого промокода нет'); return; }
-    paintCart();
-  };
 }
-function chg(n, d) {
+function chg(k, d) {
   const c = cartRead();
-  c[n].qty += d;
-  if (c[n].qty <= 0) c.splice(n, 1);
+  c[k].qty = Math.min(20, c[k].qty + d);
+  if (c[k].qty <= 0) c.splice(k, 1);
   cartWrite(c); paintCart();
 }
 document.addEventListener('DOMContentLoaded', paintCart);

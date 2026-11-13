@@ -3,80 +3,88 @@
 <head>
 <meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Оформление заказа — BEIGE BOX</title>
+<title>Оформление заказа — Beige Box</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
-<link rel="stylesheet" href="css/style.css?v=2">
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body data-page="checkout">
 <div id="site-header"></div>
-<div class="wrap page-head"><div class="crumbs"><a href="index.html">Главная</a> / <a href="cart.html">Корзина</a> / Оформление</div><h1 style="font-size:clamp(30px,3.4vw,44px)">Оформление&nbsp;заказа</h1></div>
 
-<form class="wrap cart-grid" id="form">
-  <div>
-    <div class="form-block">
-      <h3>Кто заказывает</h3>
-      <div class="form-grid">
-        <div class="field full"><label for="n">Имя и&nbsp;фамилия</label><input type="text" id="n" required autocomplete="name"></div>
-        <div class="field"><label for="ph">Телефон</label><input type="tel" id="ph" required placeholder="+7" autocomplete="tel"></div>
-        <div class="field"><label for="em">Почта для&nbsp;чека</label><input type="email" id="em" required autocomplete="email"></div>
-      </div>
-      <label class="chk" style="margin:16px 0 0"><input type="checkbox" id="other"> Подарок получит другой человек</label>
-      <div class="form-grid card-text" id="other-box" style="margin-top:12px">
-        <div class="field"><label for="rn">Имя получателя</label><input type="text" id="rn"></div>
-        <div class="field"><label for="rp">Телефон получателя</label><input type="tel" id="rp" placeholder="+7"></div>
-        <p class="muted full" style="font-size:13.5px;margin:0">Предложение: отправка подарка сразу получателю. Чек придёт на&nbsp;вашу&nbsp;почту.</p>
-      </div>
-    </div>
-
-    <div class="form-block">
-      <h3>Доставка</h3>
-      <div class="radios" id="ship">
-        <label class="radio"><input type="radio" name="ship" value="ozon" checked><div><b>Пункт выдачи Ozon</b><span>Заказ появится в&nbsp;приложении Ozon, там&nbsp;же&nbsp;— отслеживание</span></div><span class="rp">0&nbsp;₽</span></label>
-        <label class="radio"><input type="radio" name="ship" value="cdek"><div><b>СДЭК</b><span>Пункт выдачи или&nbsp;курьер до&nbsp;двери</span></div><span class="rp">0&nbsp;₽</span></label>
-        <label class="radio"><input type="radio" name="ship" value="ya"><div><b>Яндекс Доставка</b><span>Пункт выдачи или&nbsp;курьер</span></div><span class="rp">0&nbsp;₽</span></label>
-      </div>
-      <div class="field" style="margin-top:16px"><label for="city">Город и&nbsp;адрес пункта выдачи</label><input type="text" id="city" required placeholder="Например: Екатеринбург, ул. Малышева, 51"></div>
-      <p class="muted" style="font-size:13.5px;margin:12px 0 0">На&nbsp;готовом сайте здесь будет карта пунктов выдачи и&nbsp;срок доставки до&nbsp;вашего&nbsp;города.</p>
-    </div>
-
-    <div class="form-block">
-      <h3>Оплата</h3>
-      <div class="radios">
-        <label class="radio"><input type="radio" name="pay" value="card" checked><div><b>Картой онлайн</b><span>Visa, Mastercard, Мир, СБП</span></div></label>
-        <label class="radio"><input type="radio" name="pay" value="inv"><div><b>По&nbsp;счёту для&nbsp;компаний</b><span>Пришлём счёт на&nbsp;почту, отправим после&nbsp;оплаты</span></div></label>
-      </div>
-    </div>
+<main>
+  <div class="wrap page-head">
+    <div class="crumbs"><a href="index.html">Главная</a> / <a href="cart.html">Корзина</a> / Оформление</div>
+    <h1>Оформление заказа</h1>
   </div>
 
-  <aside class="summary" id="sum"></aside>
-</form>
+  <form class="wrap cart-grid" id="form">
+    <div>
+      <div class="form-block">
+        <h3><span class="n">1</span>Кто заказывает</h3>
+        <div class="form-grid">
+          <div class="field full"><label for="n">Имя и&nbsp;фамилия</label><input type="text" id="n" required autocomplete="name"></div>
+          <div class="field"><label for="ph">Телефон</label><input type="tel" id="ph" required placeholder="+7" autocomplete="tel"></div>
+          <div class="field"><label for="em">Почта для&nbsp;чека</label><input type="email" id="em" required autocomplete="email"></div>
+        </div>
+        <label class="chk" style="margin-top:20px"><input type="checkbox" id="other"> Подарок получит другой человек</label>
+        <div class="slide" id="other-box">
+          <div class="form-grid">
+            <div class="field"><label for="rn">Имя получателя</label><input type="text" id="rn"></div>
+            <div class="field"><label for="rp">Телефон получателя</label><input type="tel" id="rp" placeholder="+7"></div>
+          </div>
+          <p class="hint">Отправим подарок сразу получателю. Чек придёт на&nbsp;вашу почту.</p>
+        </div>
+      </div>
+
+      <div class="form-block">
+        <h3><span class="n">2</span>Доставка</h3>
+        <div class="radios">
+          <label class="radio"><input type="radio" name="ship" value="cdek" checked><div><b>СДЭК</b><span>Пункт выдачи или&nbsp;курьер до&nbsp;двери</span></div><span class="rp ship-p"></span></label>
+          <label class="radio"><input type="radio" name="ship" value="ya"><div><b>Яндекс Доставка</b><span>Пункт выдачи или&nbsp;курьер</span></div><span class="rp ship-p"></span></label>
+        </div>
+        <div class="field" style="margin-top:16px"><label for="city">Город и&nbsp;адрес пункта выдачи</label><input type="text" id="city" required placeholder="Например: Екатеринбург, ул. Малышева, 51"></div>
+        <p class="hint">На&nbsp;готовом сайте здесь будет карта пунктов выдачи и&nbsp;срок доставки до&nbsp;вашего города.</p>
+      </div>
+
+      <div class="form-block">
+        <h3><span class="n">3</span>Оплата</h3>
+        <div class="radios">
+          <label class="radio"><input type="radio" name="pay" value="card" checked><div><b>Картой онлайн</b><span>Visa, Mastercard, Мир, СБП</span></div></label>
+          <label class="radio"><input type="radio" name="pay" value="inv"><div><b>По&nbsp;счёту для&nbsp;компаний</b><span>Пришлём счёт на&nbsp;почту, отправим после оплаты</span></div></label>
+        </div>
+      </div>
+    </div>
+
+    <aside class="summary" id="sum"></aside>
+  </form>
+</main>
 
 <div id="site-footer"></div>
-<script src="js/products.js?v=2"></script>
-<script src="js/main.js?v=2"></script>
+<script src="js/products.js?v=1"></script>
+<script src="js/main.js?v=1"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const c = cartRead();
   if (!c.length) { location.replace('cart.html'); return; }
-  const sum = cartSum(), disc = cartDiscount(), total = sum - disc;
+  const total = cartSum(), free = total >= FREE_FROM;
+  document.querySelectorAll('.ship-p').forEach(el => el.textContent = free ? '0 ₽' : 'по тарифу');
+  const payText = () => document.querySelector('[name=pay]:checked').value === 'inv' ? 'Получить счёт' : `Оплатить ${RUB(total)}`;
   document.getElementById('sum').innerHTML = `
-    <h3 style="margin-bottom:14px">Ваш заказ</h3>
-    ${c.map(i => { const p = byId(i.id); return `<div class="r"><span>${p.name}${i.size ? ', ' + i.size : ''} × ${i.qty}</span><span>${RUB(p.price * i.qty)}</span></div>`; }).join('')}
-    ${disc ? `<div class="r"><span>Промокод ${PROMO.code}</span><span>−${RUB(disc)}</span></div>` : ''}
-    <div class="r"><span>Доставка</span><span>${total >= FREE_FROM ? 'бесплатно' : 'по тарифу'}</span></div>
+    <h3>Ваш заказ</h3>
+    ${c.map(i => { const p = byId(i.id); return `<div class="r"><span>${nb(p.name)}${i.size ? ', ' + i.size : ''} × ${i.qty}</span><span>${RUB(p.price * i.qty)}</span></div>`; }).join('')}
+    <div class="r"><span>Доставка</span><span>${free ? 'бесплатно' : 'по тарифу'}</span></div>
     <div class="r t"><span>Итого</span><span>${RUB(total)}</span></div>
-    <button class="btn wide" type="submit" style="margin-top:18px">Оплатить ${RUB(total)}</button>
-    <p class="muted" style="font-size:13.5px;margin:12px 0 0">Это демо: деньги не&nbsp;списываются. Нажимая кнопку, вы соглашаетесь с&nbsp;офертой и&nbsp;политикой конфиденциальности.</p>`;
+    <button class="btn wide" type="submit" id="pay">${payText()}</button>
+    <p class="hint">Это демо: деньги не&nbsp;списываются. Нажимая кнопку, вы&nbsp;соглашаетесь с&nbsp;офертой и&nbsp;политикой конфиденциальности.</p>
+    <p class="hint"><a href="cart.html" style="border-bottom:1px solid var(--line)">Изменить заказ</a></p>`;
+  document.querySelectorAll('[name=pay]').forEach(r => r.onchange = () => document.getElementById('pay').textContent = payText());
   const other = document.getElementById('other');
   other.onchange = () => document.getElementById('other-box').classList.toggle('on', other.checked);
   document.getElementById('form').onsubmit = e => {
     e.preventDefault();
-    try { sessionStorage.setItem('bb_last', JSON.stringify({ total, name: document.getElementById('n').value.split(' ')[0], ship: document.querySelector('[name=ship]:checked').value })); } catch (err) {}
-    cartWrite([]); promoSet(false);
+    try { sessionStorage.setItem('bb_last', JSON.stringify({ total, name: document.getElementById('n').value.trim().split(' ')[0], ship: document.querySelector('[name=ship]:checked').value })); } catch (err) {}
+    cartWrite([]);
     location.href = 'success.html';
   };
 });

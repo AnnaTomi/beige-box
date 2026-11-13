@@ -3,82 +3,107 @@
 <head>
 <meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Товар — BEIGE BOX</title>
+<title>Товар — Beige Box</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
-<link rel="stylesheet" href="css/style.css?v=2">
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body data-page="product">
 <div id="site-header"></div>
 
-<div class="wrap page-head" style="padding-bottom:18px">
-  <div class="crumbs" id="crumbs"></div>
-</div>
-<div class="wrap pp" id="pp"></div>
-
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head"><div><h2>С&nbsp;этим часто&nbsp;берут</h2></div></div>
-    <div class="goods" id="more"></div>
+<main>
+  <div class="wrap" style="padding-top:32px">
+    <div class="crumbs" id="crumbs" style="margin:0"></div>
+    <div class="pp" id="pp"></div>
   </div>
-</section>
+
+  <section id="rvSec">
+    <div class="wrap">
+      <div class="center">
+        <span class="eyebrow">Отзывы с&nbsp;Wildberries</span>
+        <h2>Что говорят покупатели</h2>
+        <p class="sub">Отзывы приведены дословно, каждый можно открыть на&nbsp;Wildberries.</p>
+      </div>
+      <div class="rvs" id="rvs"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="center" style="margin-bottom:48px">
+        <span class="eyebrow">Ещё из&nbsp;каталога</span>
+        <h2>С&nbsp;этим часто берут</h2>
+      </div>
+      <div class="goods" id="more"></div>
+    </div>
+  </section>
+</main>
 
 <div id="site-footer"></div>
-<script src="js/products.js?v=2"></script>
-<script src="js/main.js?v=2"></script>
+<script src="js/products.js?v=1"></script>
+<script src="js/reviews.js?v=1"></script>
+<script src="js/main.js?v=1"></script>
 <script>
+/* стандартная таблица размеров, обхваты в сантиметрах */
+const SIZE_W = [['S','42–44','84–88','66–70','92–96'],['M','46','88–92','70–74','96–100'],['L','48','92–96','74–78','100–104'],['XL','50','96–100','78–82','104–108'],['XXL','52','100–104','82–86','108–112']];
+const SIZE_M = [['M','48','96–100','84–88','98–102'],['L','50','100–104','88–92','102–106'],['XL','52','104–108','92–96','106–110'],['XXL','54','108–112','96–100','110–114']];
+function sizeTable(p) {
+  const tbl = (title, rows) => `<h5>${title}</h5><table><thead><tr><th>Размер</th><th>Россия</th><th>Грудь</th><th>Талия</th><th>Бёдра</th></tr></thead><tbody>${rows.map(r => `<tr class="${p.sizes.includes(r[0]) ? 'has' : ''}"><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join('')}</tbody></table>`;
+  const her = p.who.includes('her'), him = p.who.includes('him');
+  return (her || !him ? tbl('Женские размеры', SIZE_W) : '') + (him ? tbl('Мужские размеры', SIZE_M) : '') +
+    `<p class="st-note">Обхваты тела в&nbsp;сантиметрах. Размеры этой модели выделены. Если сомневаетесь между двумя, напишите нам: подскажем по&nbsp;посадке.</p>`;
+}
+
+const p = byId(qs.get('id')) || PRODUCTS[0];
+const cat = CATS.find(c => c.id === p.cat);
+document.title = p.name + ' — Beige Box';
+document.body.dataset.page = p.cat;
+
 document.addEventListener('DOMContentLoaded', () => {
-  const p = byId(qs.get('id')) || PRODUCTS[0];
-  const cat = CATS.find(c => c.id === p.cat);
-  document.title = p.name + ' — BEIGE BOX';
-  document.body.dataset.page = p.cat;
-  paintChrome(p.cat);
-  document.getElementById('crumbs').innerHTML = `<a href="index.html">Главная</a> / <a href="catalog.html?cat=${p.cat}">${cat.name}</a> / ${p.name}`;
+  document.getElementById('crumbs').innerHTML = `<a href="index.html">Главная</a> / <a href="catalog.html">Каталог</a> / <a href="catalog.html?cat=${p.cat}">${cat.name}</a>`;
 
   const sized = p.sizes && p.sizes.length;
   let size = sized ? (p.sizes.find(s => (p.stock[s] || 0) > 0) || '') : '';
   let qty = 1;
   const tags = [...p.who.map(w => WHO[w]), ...p.occ.map(o => OCC[o])];
-  const items = (p.items || []).map(x => x.replace(/^подарочн(ая|ый)\s/i, m => m));
+  const items = p.items || [];
+  const li = t => `<li>${nb(cap(t.replace(/(\d+)\*(\d+)/g, '$1×$2')))}</li>`;
 
   document.getElementById('pp').innerHTML = `
     <div class="gal">
-      <div class="thumbs">${p.photos.map((f, i) => `<button type="button" class="${i ? '' : 'on'}" data-i="${i}"><img src="${f}" alt=""></button>`).join('')}</div>
+      <div class="thumbs">${p.photos.map((f, i) => `<button type="button" class="${i ? '' : 'on'}" data-i="${i}" aria-label="Фото ${i + 1}"><img src="${f}" alt=""></button>`).join('')}</div>
       <div class="main-img"><img id="main" src="${p.photos[0]}" alt="${p.name}"></div>
     </div>
-    <div>
-      ${p.badge ? `<span class="demo" style="margin-bottom:12px">${p.badge === 'hit' ? 'Хит продаж' : 'Новинка'}</span>` : ''}
-      <h1>${nb(p.name)}</h1>
-      ${tags.length ? `<div class="chips" style="margin-bottom:6px">${tags.map(t => `<span class="demo">${t}</span>`).join('')}</div>` : ''}
-      <div class="price">${RUB(p.price)}</div>
+    <div class="pp-info">
+      ${p.badge ? `<span class="badge">${p.badge === 'hit' ? 'Хит продаж' : 'Новинка'}</span>` : ''}
+      <h1 class="pp-title">${nb(p.name)}</h1>
+      ${tags.length ? `<div class="tags">${tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
+      <div class="pp-price"><b>${RUB(p.price)}</b><span class="stock" id="stock"></span></div>
 
-      ${items.length ? `<div class="box-list"><h4>Что внутри</h4><ul>${items.map(i => `<li>${nb(i)}</li>`).join('')}</ul></div>`
-        : `<div class="box-list"><h4>Описание</h4><ul>${p.comp ? `<li>Состав: ${p.comp}</li>` : ''}${p.color ? `<li>Цвет: ${p.color}</li>` : ''}</ul></div>`}
+      ${items.length ? `<div class="block"><h4>Что внутри</h4><ul class="inside-list">${items.map(li).join('')}</ul></div>`
+        : `<div class="block"><h4>Описание</h4><ul class="inside-list">${p.comp ? li('Состав: ' + p.comp) : ''}${p.color ? li('Цвет: ' + p.color) : ''}</ul></div>`}
 
-      ${sized ? `<div class="opt"><h4>Размер <a href="#sizes" class="muted" style="font-weight:500;font-size:13.5px;margin-left:8px" id="size-link">Таблица размеров</a></h4>
+      ${sized ? `<div class="block"><h4>Размер <button type="button" id="size-link">Таблица размеров</button></h4>
         <div class="sizes">${p.sizes.map(s => `<button type="button" class="size${s === size ? ' on' : ''}" data-s="${s}" ${(p.stock[s] || 0) > 0 ? '' : 'disabled title="Нет в наличии"'}>${s}</button>`).join('')}</div>
-        <div class="stock" id="stock"></div>
-        <div class="need" id="sizes" style="margin-top:12px;display:none"><i class="ti ti-ruler-2"></i><div><b>Нужно от&nbsp;вас:</b> таблица размеров пижам (обхват груди, бёдер, длина). Покажем её&nbsp;здесь, чтобы не&nbsp;приходилось спрашивать в&nbsp;сообщениях.</div></div>
-      </div>` : `<div class="stock" style="margin:-8px 0 20px"><span class="dot"></span>В&nbsp;наличии <span class="demo">для примера</span></div>`}
+        <div class="size-table" id="sizes">${sizeTable(p)}</div>
+      </div>` : ''}
 
-      ${p.cat === 'gifts' ? `<div class="opt">
+      ${p.cat === 'gifts' ? `<div class="block">
         <label class="chk"><input type="checkbox" id="card-on"> Подписать открытку вашим текстом</label>
-        <div class="card-text" id="card-box"><textarea id="card-txt" maxlength="200" placeholder="Например: С&nbsp;Новым годом! Пусть будет тепло и&nbsp;уютно. Маша"></textarea>
-        <p class="muted" style="font-size:14px;margin-top:6px">Предложение: подписываем открытку от&nbsp;руки и&nbsp;кладём в&nbsp;набор. Если подарок едет сразу получателю&nbsp;— он&nbsp;увидит ваши&nbsp;слова.</p></div>
+        <div class="slide" id="card-box"><textarea id="card-txt" maxlength="200" placeholder="Например: С Новым годом! Пусть будет тепло и уютно. Маша"></textarea>
+        <p class="hint">Подпишем открытку от&nbsp;руки и&nbsp;положим в&nbsp;набор. Если подарок едет сразу получателю, он&nbsp;увидит ваши слова.</p></div>
       </div>` : ''}
 
       <div class="buy">
-        <div class="qty"><button type="button" id="minus" aria-label="Меньше">−</button><span id="q">1</span><button type="button" id="plus" aria-label="Больше">+</button></div>
-        <button class="btn" type="button" id="add"><i class="ti ti-shopping-bag-plus"></i>В&nbsp;корзину</button>
+        <div class="qty"><button type="button" id="minus" aria-label="Меньше">−</button><span id="qn">1</span><button type="button" id="plus" aria-label="Больше">+</button></div>
+        <button class="btn" type="button" id="add">${ICON.bagPlus}В&nbsp;корзину</button>
       </div>
 
-      <div class="pp-info">
-        <div><i class="ti ti-truck-delivery"></i><span>Бесплатная доставка от&nbsp;500&nbsp;₽: СДЭК, Яндекс Доставка или&nbsp;пункт выдачи Ozon</span></div>
-        <div><i class="ti ti-clock"></i><span>Соберём за&nbsp;2–3&nbsp;рабочих дня, перед праздниками&nbsp;— до&nbsp;5</span></div>
-        <div><i class="ti ti-message-circle"></i><span>Есть вопрос? Напишите в&nbsp;<a href="${WA}" target="_blank" rel="noopener">WhatsApp</a>, <a href="${TG}" target="_blank" rel="noopener">Telegram</a> или&nbsp;<a href="${MAX}" target="_blank" rel="noopener">MAX</a></span></div>
+      <div class="perks-list">
+        <div><i class="pi">${ICON.truck}</i><span>Бесплатная доставка от&nbsp;500&nbsp;₽: СДЭК или&nbsp;Яндекс Доставка</span></div>
+        <div><i class="pi">${ICON.clock}</i><span>Соберём за&nbsp;<span class="nw">2–3</span>&nbsp;рабочих дня, перед праздниками до&nbsp;5</span></div>
+        <div><i class="pi">${ICON.chat}</i><span>Есть вопрос? Напишите в&nbsp;<a href="${WA}" target="_blank" rel="noopener">WhatsApp</a>, <a href="${TG}" target="_blank" rel="noopener">Telegram</a> или&nbsp;<a href="${MAX}" target="_blank" rel="noopener">MAX</a></span></div>
       </div>
     </div>`;
 
@@ -86,11 +111,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('main').src = p.photos[b.dataset.i];
     document.querySelectorAll('.thumbs button').forEach(x => x.classList.toggle('on', x === b));
   });
+  const addBtn = document.getElementById('add');
   function paintStock() {
-    const el = document.getElementById('stock'); if (!el) return;
-    const n = p.stock[size] || 0;
+    const el = document.getElementById('stock');
+    const none = p.soldout || (sized && !size);
+    if (none) { el.className = 'stock out'; el.textContent = 'Нет в наличии'; addBtn.disabled = true; addBtn.textContent = 'Нет в наличии'; return; }
+    const n = sized ? (p.stock[size] || 0) : 99;
     el.className = 'stock' + (n <= 2 ? ' low' : '');
-    el.innerHTML = size ? `<span class="dot"></span>${n <= 2 ? `Осталось ${n}&nbsp;шт.` : 'В наличии'} <span class="demo">для примера</span>` : 'Нет в наличии ни одного размера';
+    el.textContent = n <= 2 ? `Осталось ${n} шт.` : 'В наличии';
   }
   paintStock();
   document.querySelectorAll('.size').forEach(b => b.onclick = () => {
@@ -99,20 +127,39 @@ document.addEventListener('DOMContentLoaded', () => {
     paintStock();
   });
   const sl = document.getElementById('size-link');
-  if (sl) sl.onclick = e => { e.preventDefault(); const s = document.getElementById('sizes'); s.style.display = s.style.display === 'none' ? 'flex' : 'none'; };
+  if (sl) sl.onclick = () => document.getElementById('sizes').classList.toggle('on');
   const co = document.getElementById('card-on');
   if (co) co.onchange = () => document.getElementById('card-box').classList.toggle('on', co.checked);
-  document.getElementById('minus').onclick = () => { qty = Math.max(1, qty - 1); document.getElementById('q').textContent = qty; };
-  document.getElementById('plus').onclick = () => { qty = Math.min(20, qty + 1); document.getElementById('q').textContent = qty; };
-  document.getElementById('add').onclick = () => {
-    if (sized && !size) { toast('Выберите размер'); return; }
+  const qn = document.getElementById('qn');
+  document.getElementById('minus').onclick = () => { qty = Math.max(1, qty - 1); qn.textContent = qty; };
+  const maxQty = () => sized ? Math.max(1, Math.min(20, p.stock[size] || 1)) : 20;
+  document.getElementById('plus').onclick = () => {
+    if (qty >= maxQty()) { toast(sized ? `В наличии только ${maxQty()} шт.` : 'Больше 20 штук — напишите нам'); return; }
+    qty++; qn.textContent = qty;
+  };
+  document.querySelectorAll('.size').forEach(b => b.addEventListener('click', () => { qty = Math.min(qty, maxQty()); qn.textContent = qty; }));
+  addBtn.onclick = () => {
     const note = co && co.checked ? document.getElementById('card-txt').value.trim() : '';
     cartAdd(p.id, size, note, qty);
   };
 
-  // похожие: тот же раздел, потом общий повод
-  const more = PRODUCTS.filter(x => x.id !== p.id && x.cat === p.cat)
-    .concat(PRODUCTS.filter(x => x.id !== p.id && x.cat !== p.cat && x.occ.some(o => p.occ.includes(o))))
+  /* отзывы: сначала про этот товар, потом остальные; всегда три */
+  const rv = REVIEWS.filter(r => r.id === p.id).concat(REVIEWS.filter(r => r.id !== p.id)).slice(0, 3);
+  document.getElementById('rvs').innerHTML = rv.map(r => {
+    const rp = byId(r.id);
+    return `<article class="rv">
+      <div class="rv-top"><span class="rv-stars" aria-label="Оценка 5 из 5">★★★★★</span><span>Wildberries</span></div>
+      <p class="rv-text">«${nb(r.text)}»</p>
+      <div class="rv-foot"><b>${r.name}</b><span>${r.date}</span>
+        ${rp && rp.id !== p.id ? `<a class="rv-prod" href="product.html?id=${rp.id}">${nb(rp.name)}</a>` : ''}
+        <a class="rv-link" href="https://www.wildberries.ru/catalog/${r.wb}/feedbacks" target="_blank" rel="noopener">Смотреть на&nbsp;Wildberries</a></div>
+    </article>`;
+  }).join('');
+
+  /* похожие: тот же раздел, потом общий повод; только те, что в наличии */
+  const ok = x => x.id !== p.id && !x.soldout;
+  const more = PRODUCTS.filter(x => ok(x) && x.cat === p.cat)
+    .concat(PRODUCTS.filter(x => ok(x) && x.cat !== p.cat && x.occ.some(o => p.occ.includes(o))))
     .slice(0, 4);
   document.getElementById('more').innerHTML = more.map(cardHTML).join('');
 });

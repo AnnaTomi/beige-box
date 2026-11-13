@@ -3,198 +3,147 @@
 <head>
 <meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>BEIGE BOX — эстетичные подарочные наборы с бесплатной доставкой по России</title>
-<meta name="description" content="Эстетичные подарочные наборы в коробке, хлопковые пижамы и уютные мелочи для дома. Бесплатная доставка по России от 500 ₽.">
+<title>Beige Box — эстетичные подарочные наборы</title>
+<meta name="description" content="Подарочные наборы, пижамы и уютные мелочи для дома в фирменной коробке. Бесплатная доставка по России от 500 ₽.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
-<link rel="stylesheet" href="css/style.css?v=2">
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1">
 </head>
-<body data-page="index">
+<body class="home" data-page="index">
 <div id="site-header"></div>
 
+<!-- ===== 1. Первый экран ===== -->
 <div class="hero">
-  <div class="wrap">
-    <div>
-      <div class="eyebrow">Подарки, как&nbsp;из&nbsp;Pinterest</div>
-      <h1>Эстетичные подарочные наборы с&nbsp;бесплатной доставкой по&nbsp;всей&nbsp;России</h1>
-      <p class="lead">Готовые наборы в&nbsp;коробке с&nbsp;открыткой&nbsp;— для&nbsp;неё, для&nbsp;него и&nbsp;для&nbsp;коллег. Выберите по&nbsp;поводу и&nbsp;бюджету, а&nbsp;мы&nbsp;соберём заказ за&nbsp;<span class="nw">2–3</span>&nbsp;рабочих&nbsp;дня.</p>
-      <div class="hero-act">
-        <a href="#podbor" class="btn">Подобрать подарок</a>
-        <a href="catalog.html" class="btn line">Смотреть все&nbsp;товары</a>
+  <picture class="hero-bg">
+    <source media="(max-width:760px)" srcset="img/home/hero-candles-m.jpg">
+    <img class="stock" src="img/home/hero-candles-w.jpg" alt="Свечи на&nbsp;столе в&nbsp;тёплом свете">
+  </picture>
+  <div class="hero-in">
+    <div class="word" aria-hidden="true">
+      <span class="w" id="word"><span class="s">B</span><span class="s">E</span><span class="o">I</span><span class="o">G</span><span class="s">E</span></span>
+      <p class="side">Красота,<br>которая говорит<br>тише.</p>
+    </div>
+
+    <div class="hero-row">
+      <div>
+        <h1>Эстетичные подарочные наборы <em>с&nbsp;бесплатной доставкой по&nbsp;всей России</em></h1>
+        <p class="lead">Готовые наборы в&nbsp;фирменной коробке для неё, для него и&nbsp;для двоих. Соберём за&nbsp;<span class="nw">2–3</span>&nbsp;рабочих дня, доставка бесплатно от&nbsp;500&nbsp;₽.</p>
       </div>
-      <div class="hero-facts">
-        <div><b>4,8&nbsp;★</b><span>14&nbsp;015 оценок на&nbsp;Wildberries</span></div>
-        <div><b>102&nbsp;680</b><span>товаров продано на&nbsp;Wildberries</span></div>
-        <div><b>6&nbsp;лет</b><span>собираем подарки</span></div>
+      <div class="hero-cta">
+        <div class="btns">
+          <a class="btn light" href="catalog.html?occ=ny">Выбрать подарок <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a>
+          <a class="btn glass" href="#who">Кому дарите?</a>
+        </div>
+        <div class="rating"><span class="st">★★★★★</span><b>4,8</b> на&nbsp;Wildberries · 14&nbsp;015&nbsp;оценок</div>
       </div>
     </div>
-    <div class="hero-img"><img src="img/site/hero.jpg" alt="Подарочный набор BEIGE BOX с бокалом-ракушкой"></div>
+
+    <div class="perks" id="perks">
+      <div class="perk"><span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2.5 7h11v9.5h-11zM13.5 10h4l3.5 3.5v3h-7.5"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span><div><b>По&nbsp;России и&nbsp;СНГ</b><span>СДЭК и&nbsp;Яндекс Доставка</span></div></div>
+      <div class="perk"><span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><div><b>Соберём за&nbsp;<span class="nw">2–3</span>&nbsp;дня</b><span>в&nbsp;сезон&nbsp;— до&nbsp;5&nbsp;рабочих дней</span></div></div>
+      <div class="perk"><span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 10h16v10H4zM3 6.5h18V10H3zM12 6.5V20"/><path d="M12 6.5C10.5 3.5 7 3 7 5s5 1.5 5 1.5c1.5-3 5-3.5 5-1.5s-5 1.5-5 1.5"/></svg></span><div><b>Фирменная коробка</b><span>с&nbsp;лентой, можно дарить сразу</span></div></div>
+      <div class="perk"><span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 8.5 12 4l9 4.5v7L12 20l-9-4.5z"/><path d="M3 8.5 12 13l9-4.5M12 13v7"/></svg></span><div><b>Со&nbsp;своего склада</b><span>цены ниже, чем на&nbsp;маркетплейсах</span></div></div>
+    </div>
   </div>
 </div>
 
-<section id="podbor">
-  <div class="wrap">
-    <div class="picker">
-      <div class="eyebrow" style="margin:0 0 8px">Подбор подарка</div>
-      <h2>Кому&nbsp;дарите?</h2>
-      <div class="picker-grid">
-        <div><h4>Кому</h4><div class="chips" data-key="who"></div></div>
-        <div><h4>Повод</h4><div class="chips" data-key="occ"></div></div>
-        <div><h4>Бюджет</h4><div class="chips" data-key="budget"></div></div>
+<!-- преимущества на телефоне — под фото -->
+<div class="perks-m" id="perksM"></div>
+
+<main>
+  <!-- ===== 2. Кому дарите ===== -->
+  <section id="who">
+    <div class="wrap">
+      <div class="center">
+        <span class="eyebrow">Подбор по&nbsp;получателю</span>
+        <h2>Кому дарите?</h2>
+        <p class="sub">Готовые наборы в&nbsp;коробке: ничего не&nbsp;нужно собирать самому.</p>
       </div>
-      <div class="picker-foot">
-        <a class="btn" id="pick-go" href="catalog.html?cat=gifts">Показать подарки</a>
-        <span class="muted" id="pick-count"></span>
+      <div class="cats">
+        <a class="cat" href="catalog.html?who=her"><img src="img/home/who-her.jpg" alt="Набор с&nbsp;керамической кружкой в&nbsp;коробке" loading="lazy"><span class="lbl"><span><span class="serif">Ей</span><small>маме, подруге, сестре</small></span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></span></a>
+        <a class="cat" href="catalog.html?who=him"><img src="img/home/who-him.jpg" alt="Мужской набор с&nbsp;термосом и&nbsp;блокнотом" loading="lazy"><span class="lbl"><span><span class="serif">Ему</span><small>папе, мужу, другу</small></span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></span></a>
+        <a class="cat" href="catalog.html?who=two"><img src="img/home/who-two.jpg" alt="Пара в&nbsp;одинаковых пижамах" loading="lazy"><span class="lbl"><span><span class="serif">Для&nbsp;двоих</span><small>паре, молодожёнам</small></span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></span></a>
+        <a class="cat" href="corporate.html"><img src="img/home/who-work.jpg" alt="Наборы с&nbsp;лентой Beige Box" loading="lazy"><span class="lbl"><span><span class="serif">Коллегам</span><small>команде и&nbsp;партнёрам</small></span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></span></a>
       </div>
-    </div>
-  </div>
-</section>
-
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><h2>Разделы&nbsp;магазина</h2><p>Наборы, пижамы и&nbsp;мелочи для&nbsp;дома&nbsp;— всё, что&nbsp;вы&nbsp;видели у&nbsp;нас на&nbsp;маркетплейсах.</p></div>
-      <a href="catalog.html" class="link-more">Все&nbsp;товары</a>
-    </div>
-    <div class="cats" id="cats"></div>
-  </div>
-</section>
-
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><h2>Хиты и&nbsp;новинки</h2><p>Что&nbsp;чаще всего берут в&nbsp;подарок прямо&nbsp;сейчас.</p></div>
-      <a href="catalog.html?cat=gifts" class="link-more">Все&nbsp;наборы</a>
-    </div>
-    <div class="goods" id="hits"></div>
-  </div>
-</section>
-
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head"><div><h2>Почему выгоднее заказать&nbsp;на&nbsp;сайте</h2></div></div>
-    <div class="why">
-      <div><i class="ti ti-tag"></i><b>Цены ниже маркетплейсов</b><span>Нет&nbsp;комиссии площадки&nbsp;— разница остаётся у&nbsp;вас.</span></div>
-      <div><i class="ti ti-truck-delivery"></i><b>Доставка за&nbsp;наш&nbsp;счёт</b><span>Бесплатно при&nbsp;заказе от&nbsp;500&nbsp;₽: СДЭК, Яндекс Доставка или&nbsp;пункт Ozon.</span></div>
-      <div><i class="ti ti-building-warehouse"></i><b>Отправляем со&nbsp;своего склада</b><span>Заказ собираем сами, так&nbsp;меньше риск подмены товара.</span></div>
-      <div><i class="ti ti-sparkles"></i><b>Весь&nbsp;ассортимент и&nbsp;новинки</b><span>Все&nbsp;наборы, пижамы и&nbsp;мелочи для&nbsp;дома&nbsp;— напрямую от&nbsp;BEIGE BOX.</span></div>
-    </div>
-  </div>
-</section>
-
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head"><div><h2>Как&nbsp;получить&nbsp;заказ</h2><p>Сборка <span class="nw">2–3</span>&nbsp;рабочих дня, перед&nbsp;праздниками&nbsp;— до&nbsp;5&nbsp;дней. Доставка от&nbsp;2 до&nbsp;15&nbsp;дней в&nbsp;зависимости от&nbsp;региона.</p></div></div>
-    <div class="steps">
-      <div class="step"><i class="ti ti-gift"></i><b>Выбираете подарок</b><span>По&nbsp;получателю, поводу и&nbsp;бюджету</span></div>
-      <div class="arrow"><i class="ti ti-arrow-right"></i></div>
-      <div class="step"><i class="ti ti-credit-card"></i><b>Оплачиваете онлайн</b><span>Картой или&nbsp;по&nbsp;счёту для&nbsp;компаний</span></div>
-      <div class="arrow"><i class="ti ti-arrow-right"></i></div>
-      <div class="step"><i class="ti ti-package"></i><b>Собираем и&nbsp;упаковываем</b><span>Коробка, открытка и&nbsp;декор уже&nbsp;в&nbsp;наборе</span></div>
-      <div class="arrow"><i class="ti ti-arrow-right"></i></div>
-      <div class="step"><i class="ti ti-map-pin"></i><b>Забираете рядом с&nbsp;домом</b><span>Пункт СДЭК, Ozon или&nbsp;курьер Яндекса</span></div>
-    </div>
-  </div>
-</section>
-
-<div class="dark">
-  <section>
-    <div class="wrap split">
-      <div>
-        <div class="eyebrow">Корпоративным клиентам</div>
-        <h2 style="margin-bottom:18px">Подарки коллегам, клиентам и&nbsp;партнёрам</h2>
-        <p class="lead" style="margin-bottom:24px">Работаем с&nbsp;компаниями больше трёх лет. Минималистичная упаковка, которую не&nbsp;стыдно вручить&nbsp;партнёру.</p>
-        <ul class="ticks">
-          <li>Подберём наборы под&nbsp;бюджет и&nbsp;количество</li>
-          <li>Оплата по&nbsp;счёту на&nbsp;расчётный счёт</li>
-          <li>Доставка по&nbsp;всей России</li>
-        </ul>
-        <div class="hero-act">
-          <a href="corporate.html" class="btn">Оставить заявку</a>
-          <a href="${WA}" class="btn line" id="corp-wa"><i class="ti ti-brand-whatsapp"></i>Написать в&nbsp;WhatsApp</a>
-        </div>
-      </div>
-      <div class="ph"><img src="img/site/corp.jpg" alt="Подарочные наборы BEIGE BOX в коробках" loading="lazy"></div>
     </div>
   </section>
-</div>
 
-<section>
-  <div class="wrap split">
-    <div class="ph"><img src="img/site/about.jpg" alt="Набор с керамической кружкой и носками" loading="lazy"></div>
-    <div>
-      <div class="eyebrow">О&nbsp;бренде</div>
-      <h2 style="margin-bottom:18px">Мы&nbsp;за&nbsp;красоту, которая говорит&nbsp;тише</h2>
-      <p class="lead">«Мы&nbsp;создаём не&nbsp;просто товары, а&nbsp;состояние: спокойствие, эстетику и&nbsp;удовольствие от&nbsp;простого. Каждая деталь&nbsp;— от&nbsp;ткани до&nbsp;упаковки&nbsp;— отбирается с&nbsp;вниманием и&nbsp;смыслом».</p>
-      <p class="muted">BEIGE BOX&nbsp;— бренд из&nbsp;Екатеринбурга. Собираем подарочные наборы, шьём хлопковые пижамы и&nbsp;находим уютные мелочи для&nbsp;дома. Продаём на&nbsp;Wildberries, Ozon и&nbsp;здесь,&nbsp;напрямую.</p>
+  <!-- ===== 3. О нас ===== -->
+  <section>
+    <div class="wrap about">
+      <div class="tiles">
+        <div class="tile"><img src="img/home/t1.jpg" alt="Набор в&nbsp;коробке с&nbsp;белой лентой" loading="lazy"></div>
+        <div class="tile"><img src="img/home/t2.jpg" alt="Набор с&nbsp;пушистой варежкой в&nbsp;тёмной коробке" loading="lazy"></div>
+        <div class="tile"><img src="img/home/t3.jpg" alt="Свечи ручной работы Beige Box" loading="lazy"></div>
+      </div>
+      <div class="about-big">
+        <img src="img/home/t4.jpg" alt="Гель для душа и&nbsp;коробка с&nbsp;лентой Beige Box" loading="lazy">
+        <div class="gl">
+          <a class="btn light" href="catalog.html">Перейти в&nbsp;каталог</a>
+          <p>Подарочные наборы, пижамы и&nbsp;уютные мелочи для&nbsp;дома. Отправляем из&nbsp;Екатеринбурга по&nbsp;всей России и&nbsp;СНГ.</p>
+        </div>
+      </div>
+      <div class="about-left">
+        <h2 class="about-title">О&nbsp;нас<small>Beige Box</small></h2>
+        <div class="about-txt">
+          <p>Мы за&nbsp;красоту, которая говорит тише. За&nbsp;вещи, которые чувствуются.</p>
+          <p>Собираем наборы, как из&nbsp;Pinterest, и&nbsp;упаковываем их&nbsp;в&nbsp;фирменную коробку с&nbsp;лентой: открыл&nbsp;— и&nbsp;уже праздник.</p>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="serif">4,8&nbsp;★</span><span>рейтинг на&nbsp;Wildberries</span></div>
+        <div class="stat"><span class="serif">14&nbsp;015</span><span>оценок покупателей</span></div>
+        <div class="stat"><span class="serif">102&nbsp;680</span><span>товаров продано</span></div>
+        <div class="stat"><span class="serif">5&nbsp;лет</span><span>продаём на&nbsp;Wildberries</span></div>
+      </div>
+      <p class="src">По&nbsp;данным страницы магазина на&nbsp;Wildberries, ноябрь 2026.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head"><div><h2>Что&nbsp;пишут&nbsp;покупатели</h2><p>Дословно из&nbsp;комментариев в&nbsp;нашей группе&nbsp;ВКонтакте.</p></div></div>
-    <div class="reviews">
-      <div class="review"><p>«Самые красивые наборы на&nbsp;просторах интернета! Уже&nbsp;не&nbsp;первый год покупаю себе и&nbsp;своим&nbsp;близким».</p><small>Ксения, ВКонтакте, август 2026</small></div>
-      <div class="review"><p>«Наткнулась на&nbsp;ваши наборы и&nbsp;пижамы на&nbsp;вб и&nbsp;в&nbsp;итоге подписалась на&nbsp;все&nbsp;ваши странички в&nbsp;соцсетях. Невероятная&nbsp;эстетика».</p><small>Жанна, ВКонтакте, февраль 2026</small></div>
-      <div class="review"><p>«Подарила всем своим родным ваши&nbsp;наборчики!»</p><small>Анна, ВКонтакте, март 2022</small></div>
+  <!-- ===== 4. Новый год ===== -->
+  <div class="ny">
+    <h2 class="ny-title">Новый год</h2>
+    <p class="sub">Наборы под&nbsp;ёлку. В&nbsp;сезон сборка до&nbsp;5&nbsp;рабочих дней, лучше заказать заранее.</p>
+    <div class="car">
+      <button class="round l" id="prev" aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12H4m6-6-6 6 6 6"/></svg></button>
+      <div class="track" id="track"></div>
+      <button class="round r" id="next" aria-label="Вперёд"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
     </div>
-    <div class="need" style="margin-top:18px"><i class="ti ti-photo"></i><div><b>Нужно от&nbsp;вас:</b> <span class="nw">5–7</span>&nbsp;скриншотов отзывов с&nbsp;Wildberries и&nbsp;Ozon с&nbsp;фото покупателей. Поставим их&nbsp;сюда рядом с&nbsp;комментариями ВКонтакте.</div></div>
+    <div class="all"><a class="btn light" href="catalog.html?occ=ny">Смотреть все <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a></div>
   </div>
-</section>
-
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="picker" style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
-      <div><h2 style="margin-bottom:8px">Не&nbsp;знаете, что&nbsp;выбрать?</h2><p class="muted" style="margin:0">Напишите, кому и&nbsp;к&nbsp;какому поводу подарок,&nbsp;— подскажем&nbsp;набор.</p></div>
-      <div class="msg-row" id="help-msg"></div>
-    </div>
-  </div>
-</section>
+</main>
 
 <div id="site-footer"></div>
-<script src="js/products.js?v=2"></script>
-<script src="js/main.js?v=2"></script>
+
+<script src="js/products.js?v=1"></script>
+<script src="js/main.js?v=1"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('corp-wa').href = WA;
-  document.getElementById('help-msg').innerHTML = MSG;
+/* новогодние наборы — живые карточки из каталога, кнопка сразу кладёт в корзину */
+const NY = ['b03','b04','b12','b05','b08','b09','b07','b10'].map(byId).filter(Boolean);
+const tr = document.getElementById('track');
+tr.innerHTML = NY.map(cardHTML).join('');
+const step = () => tr.querySelector('.card').offsetWidth + 22;
+document.getElementById('prev').onclick = () => tr.scrollBy({ left: -step(), behavior: 'smooth' });
+document.getElementById('next').onclick = () => tr.scrollBy({ left: step(), behavior: 'smooth' });
 
-  // разделы
-  document.getElementById('cats').innerHTML = CATS.filter(c => c.id !== 'acc').map(c => {
-    const n = PRODUCTS.filter(p => p.cat === c.id).length;
-    return `<a class="cat" href="catalog.html?cat=${c.id}"><div class="ci"><img src="${c.img}" alt="${c.name}" loading="lazy"></div><b>${c.name}</b><span>${n} ${plural(n, 'товар', 'товара', 'товаров')} в&nbsp;прототипе</span></a>`;
-  }).join('');
+/* лёгкий поворот крайних карточек */
+function tilt() {
+  const c = tr.getBoundingClientRect(), mid = c.left + c.width / 2;
+  tr.querySelectorAll('.card').forEach(k => {
+    const r = k.getBoundingClientRect(), a = Math.max(-1, Math.min(1, (r.left + r.width / 2 - mid) / (c.width / 2)));
+    k.style.transform = innerWidth > 760 ? `rotateY(${-a * 14}deg) scale(${1 - Math.abs(a) * .06})` : '';
+  });
+}
+tr.addEventListener('scroll', () => requestAnimationFrame(tilt), { passive: true });
 
-  // хиты и новинки
-  const hits = PRODUCTS.filter(p => p.badge).slice(0, 8);
-  document.getElementById('hits').innerHTML = hits.map(cardHTML).join('');
+/* преимущества на телефоне — та же четвёрка */
+document.getElementById('perksM').innerHTML = document.getElementById('perks').innerHTML;
 
-  // подбор: повторное нажатие снимает выбор
-  const sel = { who: '', occ: '', budget: '' };
-  const src = { who: WHO, occ: OCC, budget: BUDGET };
-  const gifts = PRODUCTS.filter(isGift);
-  function match() {
-    return gifts.filter(p => (!sel.who || p.who.includes(sel.who)) && (!sel.occ || p.occ.includes(sel.occ)) && (!sel.budget || inBudget(p, sel.budget)));
-  }
-  function paint() {
-    document.querySelectorAll('.picker .chips[data-key]').forEach(box => {
-      const k = box.dataset.key;
-      box.innerHTML = Object.entries(src[k]).map(([id, t]) => `<button type="button" class="chip${sel[k] === id ? ' on' : ''}" data-id="${id}">${t}</button>`).join('');
-      box.querySelectorAll('.chip').forEach(b => b.onclick = () => { sel[k] = sel[k] === b.dataset.id ? '' : b.dataset.id; paint(); });
-    });
-    const n = match().length;
-    const q = new URLSearchParams({ cat: 'gifts' });
-    Object.entries(sel).forEach(([k, v]) => v && q.set(k, v));
-    if (sel.who || sel.occ || sel.budget) { q.delete('cat'); q.set('gift', '1'); }
-    document.getElementById('pick-go').href = 'catalog.html?' + q;
-    document.getElementById('pick-count').textContent = n ? `Подходит ${n} ${plural(n, 'вариант', 'варианта', 'вариантов')}` : 'Ничего не нашлось — снимите один из фильтров';
-  }
-  paint();
-});
+function fitHero() { fitWord(document.getElementById('word'), document.querySelector('.word'), innerWidth <= 760 ? 1 : .74); tilt(); }
+addEventListener('resize', fitHero);
+fitHero();
+if (document.fonts) document.fonts.ready.then(fitHero);
 </script>
 </body>
 </html>

@@ -3,46 +3,41 @@
 <head>
 <meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Спасибо за заказ — BEIGE BOX</title>
+<title>Заказ оформлен — Beige Box</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
-<link rel="stylesheet" href="css/style.css?v=2">
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body data-page="success">
 <div id="site-header"></div>
-<section>
-  <div class="wrap" style="max-width:760px;text-align:center">
-    <div class="mi" style="width:64px;height:64px;font-size:32px;background:var(--dark);margin:0 auto 22px"><i class="ti ti-check"></i></div>
-    <h1 style="font-size:clamp(30px,3.4vw,44px);margin-bottom:16px" id="h">Спасибо, заказ&nbsp;оформлен</h1>
-    <p class="lead" style="margin:0 auto 34px" id="t">Демо: в&nbsp;настоящем магазине здесь будет номер заказа, а&nbsp;на&nbsp;почту придёт&nbsp;чек.</p>
-    <div class="steps" style="text-align:left;margin-bottom:34px">
-      <div class="step"><i class="ti ti-mail"></i><b>Чек на&nbsp;почте</b><span>Сразу после&nbsp;оплаты</span></div>
-      <div class="arrow"><i class="ti ti-arrow-right"></i></div>
-      <div class="step"><i class="ti ti-package"></i><b>Сборка</b><span>2–3&nbsp;рабочих дня</span></div>
-      <div class="arrow"><i class="ti ti-arrow-right"></i></div>
-      <div class="step"><i class="ti ti-truck"></i><b>Отправка</b><span>Пришлём трек-номер</span></div>
-      <div class="arrow"><i class="ti ti-arrow-right"></i></div>
-      <div class="step"><i class="ti ti-map-pin"></i><b>Получение</b><span id="pt">В&nbsp;пункте выдачи</span></div>
+
+<main>
+  <section style="padding-top:72px">
+    <div class="wrap done">
+      <div class="ok" id="ok"></div>
+      <h1 id="h">Спасибо, заказ оформлен</h1>
+      <p class="sub">Демо: в&nbsp;настоящем магазине здесь будет номер заказа, а&nbsp;на&nbsp;почту придёт чек.</p>
+      <div class="steps" id="steps"></div>
+      <p class="sub">Есть вопрос по&nbsp;заказу? Напишите, где вам удобнее:</p>
+      <div id="m"></div>
+      <a href="catalog.html" class="btn line" style="margin-top:34px">Вернуться в&nbsp;каталог</a>
     </div>
-    <p class="muted">Есть вопрос по&nbsp;заказу? Напишите, где&nbsp;вам&nbsp;удобнее:</p>
-    <div class="msg-row" id="m" style="justify-content:center;margin-top:12px"></div>
-    <a href="index.html" class="btn line" style="margin-top:30px">Вернуться в&nbsp;магазин</a>
-  </div>
-</section>
+  </section>
+</main>
+
 <div id="site-footer"></div>
-<script src="js/products.js?v=2"></script>
-<script src="js/main.js?v=2"></script>
+<script src="js/products.js?v=1"></script>
+<script src="js/main.js?v=1"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('m').innerHTML = MSG;
   let last = null; try { last = JSON.parse(sessionStorage.getItem('bb_last')); } catch (e) {}
-  if (last) {
-    if (last.name) document.getElementById('h').textContent = last.name + ', спасибо, заказ оформлен';
-    document.getElementById('pt').textContent = { ozon: 'В пункте выдачи Ozon', cdek: 'В пункте СДЭК или курьером', ya: 'Яндекс Доставкой' }[last.ship] || 'В пункте выдачи';
-  }
+  const where = last ? ({ cdek: 'В пункте СДЭК или курьером', ya: 'Яндекс Доставкой' }[last.ship] || 'В пункте выдачи') : 'В пункте выдачи';
+  const S = [['mail', 'Чек на почте', 'Сразу после оплаты'], ['box', 'Сборка', '2–3 рабочих дня'], ['truck', 'Отправка', 'Пришлём трек‑номер'], ['pin', 'Получение', where]];
+  document.getElementById('ok').innerHTML = ICON.check;
+  document.getElementById('steps').innerHTML = S.map(([i, b, s]) => `<div class="step"><span class="pi">${ICON[i]}</span><b>${b}</b><span>${nb(s)}</span></div>`).join(`<div class="to">${ICON.arr}</div>`);
+  document.getElementById('m').innerHTML = MSG;
+  if (last && last.name) document.getElementById('h').textContent = last.name + ', спасибо, заказ оформлен';
 });
 </script>
 </body>

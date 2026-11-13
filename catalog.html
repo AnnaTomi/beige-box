@@ -3,97 +3,124 @@
 <head>
 <meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Каталог — BEIGE BOX</title>
+<title>Каталог — Beige Box</title>
+<meta name="description" content="Каталог Beige Box: подарочные наборы, пижамы, ёлочные игрушки и мелочи для дома. Подбор по получателю, поводу и бюджету.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
-<link rel="stylesheet" href="css/style.css?v=2">
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body data-page="catalog">
 <div id="site-header"></div>
 
-<div class="wrap page-head">
-  <div class="crumbs"><a href="index.html">Главная</a> / <span id="crumb">Все&nbsp;товары</span></div>
-  <h1 id="title" style="font-size:clamp(30px,3.4vw,44px)">Все&nbsp;товары</h1>
-  <p id="subtitle">В&nbsp;прототипе&nbsp;— выборка из&nbsp;каталога сайта, по&nbsp;<span class="nw">2–8</span>&nbsp;товаров в&nbsp;разделе. На&nbsp;готовом сайте здесь будет весь&nbsp;ассортимент.</p>
-</div>
-
-<div class="wrap cat-layout">
-  <aside class="filters" id="filters"></aside>
-  <div>
-    <div class="cat-top">
-      <span class="muted" id="count"></span>
-      <select id="sort" aria-label="Сортировка">
-        <option value="">Сначала популярные</option>
-        <option value="asc">Сначала дешевле</option>
-        <option value="desc">Сначала дороже</option>
-      </select>
-    </div>
-    <div class="goods" id="goods"></div>
+<main>
+  <div class="wrap page-head">
+    <div class="crumbs"><a href="index.html">Главная</a> / <span id="crumb">Каталог</span></div>
+    <span class="eyebrow" id="eyebrow">Beige Box</span>
+    <h1 id="title" style="margin-top:18px">Каталог</h1>
+    <p class="sub" id="subtitle">Подарочные наборы, пижамы и&nbsp;уютные мелочи для&nbsp;дома.</p>
   </div>
-</div>
+
+  <div class="wrap">
+    <div class="cat-bar" id="catBar"></div>
+
+    <div class="cat-layout">
+      <aside class="filters" id="filters"></aside>
+      <div>
+        <div class="cat-top">
+          <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input type="search" id="q" placeholder="Поиск: свеча, термос, пижама" aria-label="Поиск по каталогу"></label>
+          <div class="right">
+            <button class="f-open" type="button" id="fOpen">Фильтры<i id="fN"></i></button>
+            <span class="count" id="count"></span>
+            <select id="sort" aria-label="Сортировка">
+              <option value="">Сначала популярные</option>
+              <option value="asc">Сначала дешевле</option>
+              <option value="desc">Сначала дороже</option>
+            </select>
+          </div>
+        </div>
+        <div class="goods" id="goods"></div>
+      </div>
+    </div>
+  </div>
+</main>
+<div class="shade" id="shade"></div>
 
 <div id="site-footer"></div>
-<script src="js/products.js?v=2"></script>
-<script src="js/main.js?v=2"></script>
+<script src="js/products.js?v=1"></script>
+<script src="js/main.js?v=1"></script>
 <script>
+const st = { cat: qs.get('cat') || '', who: qs.get('who') || '', occ: qs.get('occ') || '', budget: qs.get('budget') || '', q: qs.get('q') || '' };
+document.body.dataset.page = st.occ === 'ny' && !st.cat ? 'ny' : st.cat || 'catalog';
+
 document.addEventListener('DOMContentLoaded', () => {
-  const st = { cat: qs.get('cat') || '', who: qs.get('who') || '', occ: qs.get('occ') || '', budget: qs.get('budget') || '', gift: qs.get('gift') === '1' };
-  const groups = [
-    ['cat', 'Раздел', Object.fromEntries(CATS.map(c => [c.id, c.name]))],
-    ['who', 'Кому', WHO],
-    ['occ', 'Повод', OCC],
-    ['budget', 'Бюджет', BUDGET]
-  ];
-  const sortSel = document.getElementById('sort');
+  const groups = [['who', 'Кому', WHO], ['occ', 'Повод', OCC], ['budget', 'Бюджет', BUDGET]];
+  const sortSel = document.getElementById('sort'), qEl = document.getElementById('q');
+  const filters = document.getElementById('filters'), shade = document.getElementById('shade');
+  qEl.value = st.q;
 
   function list() {
+    const words = st.q.toLowerCase().split(/\s+/).filter(Boolean);
     let r = PRODUCTS.filter(p =>
       (!st.cat || p.cat === st.cat) &&
-      (!st.gift || isGift(p)) &&
       (!st.who || p.who.includes(st.who)) &&
       (!st.occ || p.occ.includes(st.occ)) &&
-      (!st.budget || inBudget(p, st.budget)));
+      (!st.budget || inBudget(p, st.budget)) &&
+      (!words.length || words.every(w => (p.name + ' ' + (p.comp || '') + ' ' + (p.color || '')).toLowerCase().includes(w))));
     if (sortSel.value === 'asc') r = r.slice().sort((a, b) => a.price - b.price);
-    if (sortSel.value === 'desc') r = r.slice().sort((a, b) => b.price - a.price);
-    return r;
+    else if (sortSel.value === 'desc') r = r.slice().sort((a, b) => b.price - a.price);
+    else r = r.slice().sort((a, b) => (b.badge ? 1 : 0) - (a.badge ? 1 : 0));
+    return r.sort((a, b) => (a.soldout ? 1 : 0) - (b.soldout ? 1 : 0));
   }
+  function sync() {
+    const q = new URLSearchParams();
+    ['cat', 'who', 'occ', 'budget', 'q'].forEach(x => st[x] && q.set(x, st[x]));
+    history.replaceState(null, '', 'catalog.html' + (q.toString() ? '?' + q : ''));
+  }
+  const chip = (k, v, name) => `<button type="button" class="chip${st[k] === v ? ' on' : ''}" data-k="${k}" data-v="${v}">${name}</button>`;
 
   function paint() {
-    // фильтры: «Все» + варианты; повторное нажатие снимает фильтр и возвращает «Все»
-    document.getElementById('filters').innerHTML = groups.map(([k, t, opts]) => `
-      <div class="fgroup"><h4>${t}</h4><div class="chips">
-        <button type="button" class="chip${!st[k] ? ' on' : ''}" data-k="${k}" data-v="">Все</button>
-        ${Object.entries(opts).map(([id, name]) => `<button type="button" class="chip${st[k] === id ? ' on' : ''}" data-k="${k}" data-v="${id}">${name}</button>`).join('')}
-      </div></div>`).join('') +
-      `<div class="need"><i class="ti ti-bulb"></i><div>Отметки «кому» и&nbsp;«повод» мы&nbsp;проставили по&nbsp;составу наборов и&nbsp;вашим постам. <b>Проверьте</b>, всё&nbsp;ли&nbsp;верно.</div></div>`;
-    document.querySelectorAll('#filters .chip').forEach(b => b.onclick = () => {
+    /* разделы — строкой сверху; повторное нажатие снимает фильтр и возвращает «Все» */
+    document.getElementById('catBar').innerHTML = chip('cat', '', 'Все товары') + CATS.map(c => chip('cat', c.id, c.name)).join('');
+    const active = groups.filter(([k]) => st[k]).length;
+    filters.innerHTML = `<div class="f-close"><b>Фильтры</b><button class="ic" type="button" id="fClose" aria-label="Закрыть фильтры">${ICON.close}</button></div>` +
+      groups.map(([k, t, opts]) => `<div class="fgroup"><h4>${t}</h4><div class="chips">${chip(k, '', 'Все')}${Object.entries(opts).map(([id, name]) => chip(k, id, name)).join('')}</div></div>`).join('') +
+      (active ? `<button class="f-reset" type="button" id="fReset">Сбросить фильтры</button>` : '');
+    document.getElementById('fN').textContent = active || '';
+
+    document.querySelectorAll('.chip[data-k]').forEach(b => b.onclick = () => {
       const k = b.dataset.k, v = b.dataset.v;
       st[k] = st[k] === v ? '' : v;
-      if (k !== 'cat') st.gift = false;
-      const q = new URLSearchParams();
-      ['cat', 'who', 'occ', 'budget'].forEach(x => st[x] && q.set(x, st[x]));
-      history.replaceState(null, '', 'catalog.html' + (q.toString() ? '?' + q : ''));
-      paint();
+      sync(); paint();
     });
+    const rs = document.getElementById('fReset');
+    if (rs) rs.onclick = () => { groups.forEach(([k]) => st[k] = ''); sync(); paint(); };
+    document.getElementById('fClose').onclick = closeF;
 
     const c = CATS.find(x => x.id === st.cat);
-    const title = c ? c.name : (st.who || st.occ || st.budget || st.gift) ? 'Подборка' : 'Все товары';
+    const title = c ? c.name : st.occ && !st.who && !st.budget ? OCC[st.occ] : st.who && !st.occ && !st.budget ? { her: 'Подарки ей', him: 'Подарки ему', two: 'Подарки для двоих', work: 'Подарки коллегам' }[st.who] : (st.who || st.occ || st.budget) ? 'Подборка' : 'Каталог';
     document.getElementById('title').textContent = title;
     document.getElementById('crumb').textContent = title;
-    document.title = title + ' — BEIGE BOX';
-    document.querySelectorAll('nav.main a').forEach(a => a.classList.toggle('active',
-      (st.cat && a.getAttribute('href') === 'catalog.html?cat=' + st.cat) || (!st.cat && a.getAttribute('href') === 'catalog.html')));
+    document.title = title + ' — Beige Box';
+    const key = st.occ === 'ny' && !st.cat ? 'ny' : st.cat;
+    document.querySelectorAll('.site-head .nav a').forEach(a => {
+      const h = a.getAttribute('href');
+      a.classList.toggle('on', (key === 'ny' && h.includes('occ=ny')) || (key && key !== 'ny' && h === 'catalog.html?cat=' + key));
+    });
 
     const r = list();
     document.getElementById('count').textContent = `${r.length} ${plural(r.length, 'товар', 'товара', 'товаров')}`;
     document.getElementById('goods').innerHTML = r.length ? r.map(cardHTML).join('') :
-      `<div class="empty"><h3 style="margin-bottom:8px">Таких товаров пока нет</h3><p class="muted">Снимите один из&nbsp;фильтров или&nbsp;напишите нам&nbsp;— соберём подарок под&nbsp;ваш&nbsp;запрос.</p><div class="msg-row" style="justify-content:center;margin-top:14px">${MSG}</div></div>`;
+      `<div class="empty"><h3>Таких товаров пока нет на&nbsp;сайте</h3><p>Снимите один из&nbsp;фильтров или&nbsp;напишите нам: соберём подарок под&nbsp;ваш запрос.</p>${MSG}</div>`;
   }
+  function closeF() { filters.classList.remove('open'); shade.classList.remove('on'); document.body.classList.remove('lock'); }
+  document.getElementById('fOpen').onclick = () => { filters.classList.add('open'); shade.classList.add('on'); document.body.classList.add('lock'); };
+  shade.onclick = closeF;
   sortSel.onchange = paint;
+  let t; qEl.oninput = () => { clearTimeout(t); t = setTimeout(() => { st.q = qEl.value.trim(); sync(); paintGoodsOnly(); }, 180); };
+  function paintGoodsOnly() { paint(); }
   paint();
+  if (qs.get('find')) { qEl.focus(); history.replaceState(null, '', 'catalog.html'); }
 });
 </script>
 </body>
