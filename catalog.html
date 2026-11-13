@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Каталог — BEIGE BOX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="css/style.css?v=2">
+</head>
+<body data-page="catalog">
+<div id="site-header"></div>
+
+<div class="wrap page-head">
+  <div class="crumbs"><a href="index.html">Главная</a> / <span id="crumb">Все&nbsp;товары</span></div>
+  <h1 id="title" style="font-size:clamp(30px,3.4vw,44px)">Все&nbsp;товары</h1>
+  <p id="subtitle">В&nbsp;прототипе&nbsp;— выборка из&nbsp;каталога сайта, по&nbsp;2–8&nbsp;товаров в&nbsp;разделе. На&nbsp;готовом сайте здесь будет весь&nbsp;ассортимент.</p>
+</div>
+
+<div class="wrap cat-layout">
+  <aside class="filters" id="filters"></aside>
+  <div>
+    <div class="cat-top">
+      <span class="muted" id="count"></span>
+      <select id="sort" aria-label="Сортировка">
+        <option value="">Сначала популярные</option>
+        <option value="asc">Сначала дешевле</option>
+        <option value="desc">Сначала дороже</option>
+      </select>
+    </div>
+    <div class="goods" id="goods"></div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="js/products.js?v=2"></script>
+<script src="js/main.js?v=2"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const st = { cat: qs.get('cat') || '', who: qs.get('who') || '', occ: qs.get('occ') || '', budget: qs.get('budget') || '', gift: qs.get('gift') === '1' };
+  const groups = [
+    ['cat', 'Раздел', Object.fromEntries(CATS.map(c => [c.id, c.name]))],
+    ['who', 'Кому', WHO],
+    ['occ', 'Повод', OCC],
+    ['budget', 'Бюджет', BUDGET]
+  ];
+  const sortSel = document.getElementById('sort');
+
+  function list() {
+    let r = PRODUCTS.filter(p =>
+      (!st.cat || p.cat === st.cat) &&
+      (!st.gift || isGift(p)) &&
+      (!st.who || p.who.includes(st.who)) &&
+      (!st.occ || p.occ.includes(st.occ)) &&
+      (!st.budget || inBudget(p, st.budget)));
+    if (sortSel.value === 'asc') r = r.slice().sort((a, b) => a.price - b.price);
+    if (sortSel.value === 'desc') r = r.slice().sort((a, b) => b.price - a.price);
+    return r;
+  }
+
+  function paint() {
+    // фильтры: «Все» + варианты; повторное нажатие снимает фильтр и возвращает «Все»
+    document.getElementById('filters').innerHTML = groups.map(([k, t, opts]) => `
+      <div class="fgroup"><h4>${t}</h4><div class="chips">
+        <button type="button" class="chip${!st[k] ? ' on' : ''}" data-k="${k}" data-v="">Все</button>
+        ${Object.entries(opts).map(([id, name]) => `<button type="button" class="chip${st[k] === id ? ' on' : ''}" data-k="${k}" data-v="${id}">${name}</button>`).join('')}
+      </div></div>`).join('') +
+      `<div class="need"><i class="ti ti-bulb"></i><div>Отметки «кому» и&nbsp;«повод» мы&nbsp;проставили по&nbsp;составу наборов и&nbsp;вашим постам. <b>Проверьте</b>, всё&nbsp;ли&nbsp;верно.</div></div>`;
+    document.querySelectorAll('#filters .chip').forEach(b => b.onclick = () => {
+      const k = b.dataset.k, v = b.dataset.v;
+      st[k] = st[k] === v ? '' : v;
+      if (k !== 'cat') st.gift = false;
+      const q = new URLSearchParams();
+      ['cat', 'who', 'occ', 'budget'].forEach(x => st[x] && q.set(x, st[x]));
+      history.replaceState(null, '', 'catalog.html' + (q.toString() ? '?' + q : ''));
+      paint();
+    });
+
+    const c = CATS.find(x => x.id === st.cat);
+    const title = c ? c.name : (st.who || st.occ || st.budget || st.gift) ? 'Подборка' : 'Все товары';
+    document.getElementById('title').textContent = title;
+    document.getElementById('crumb').textContent = title;
+    document.title = title + ' — BEIGE BOX';
+    document.querySelectorAll('nav.main a').forEach(a => a.classList.toggle('active',
+      (st.cat && a.getAttribute('href') === 'catalog.html?cat=' + st.cat) || (!st.cat && a.getAttribute('href') === 'catalog.html')));
+
+    const r = list();
+    document.getElementById('count').textContent = `${r.length} ${plural(r.length, 'товар', 'товара', 'товаров')}`;
+    document.getElementById('goods').innerHTML = r.length ? r.map(cardHTML).join('') :
+      `<div class="empty"><h3 style="margin-bottom:8px">Таких товаров пока нет</h3><p class="muted">Снимите один из&nbsp;фильтров или&nbsp;напишите нам&nbsp;— соберём подарок под&nbsp;ваш&nbsp;запрос.</p><div class="msg-row" style="justify-content:center;margin-top:14px">${MSG}</div></div>`;
+  }
+  sortSel.onchange = paint;
+  paint();
+});
+</script>
+</body>
+</html>

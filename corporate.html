@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Корпоративные подарки — BEIGE BOX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="css/style.css?v=2">
+</head>
+<body data-page="corp">
+<div id="site-header"></div>
+
+<section>
+  <div class="wrap split">
+    <div>
+      <div class="crumbs"><a href="index.html">Главная</a> / Корпоративным клиентам</div>
+      <h1 style="font-size:clamp(30px,3.6vw,46px);margin-bottom:18px">Подарки коллегам, клиентам и&nbsp;партнёрам</h1>
+      <p class="lead" style="margin-bottom:22px">Собираем наборы для&nbsp;компаний больше трёх лет. Спокойная минималистичная упаковка, которую приятно вручить и&nbsp;не&nbsp;стыдно отправить&nbsp;партнёру.</p>
+      <ul class="ticks">
+        <li>Подберём наборы под&nbsp;бюджет и&nbsp;количество</li>
+        <li>Оплата по&nbsp;счёту на&nbsp;расчётный счёт</li>
+        <li>Доставка по&nbsp;всей России</li>
+      </ul>
+      <a href="#zayavka" class="btn">Оставить заявку</a>
+    </div>
+    <div class="ph"><img src="img/site/gift.jpg" alt="Набор с ракушками и бокалом в подарочной коробке"></div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><h2>Наборы, которые берут&nbsp;компании</h2><p>Нейтральные подарки, которые подойдут и&nbsp;мужчинам, и&nbsp;женщинам.</p></div></div>
+    <div class="goods" id="goods"></div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><h2>Как&nbsp;мы&nbsp;работаем</h2></div></div>
+    <div class="steps">
+      <div class="step"><i class="ti ti-message-2"></i><b>Заявка</b><span>Количество, бюджет и&nbsp;дата</span></div>
+      <div class="arrow"><i class="ti ti-arrow-right"></i></div>
+      <div class="step"><i class="ti ti-list-check"></i><b>Подборка</b><span>Предложим 2–3&nbsp;варианта наборов</span></div>
+      <div class="arrow"><i class="ti ti-arrow-right"></i></div>
+      <div class="step"><i class="ti ti-file-invoice"></i><b>Счёт</b><span>Оплата на&nbsp;расчётный счёт</span></div>
+      <div class="arrow"><i class="ti ti-arrow-right"></i></div>
+      <div class="step"><i class="ti ti-truck"></i><b>Доставка</b><span>СДЭК или&nbsp;Яндекс Доставкой</span></div>
+    </div>
+    <div class="need" style="margin-top:18px"><i class="ti ti-help"></i><div><b>Нужно от&nbsp;вас:</b> минимальный тираж, сроки на&nbsp;партию, как&nbsp;быстро отвечаете на&nbsp;заявку, возите&nbsp;ли&nbsp;подарки каждому получателю отдельно, можно&nbsp;ли&nbsp;добавить логотип компании или&nbsp;открытку с&nbsp;текстом заказчика, 2–3&nbsp;компании, которым уже&nbsp;собирали подарки (если&nbsp;можно назвать).</div></div>
+  </div>
+</section>
+
+<section style="padding-top:0" id="zayavka">
+  <div class="wrap">
+    <form class="form-block form-pad" id="f">
+      <h2 style="margin-bottom:8px">Заявка от&nbsp;компании</h2>
+      <p class="muted" style="margin-bottom:22px">Ответим и&nbsp;пришлём подборку наборов под&nbsp;ваш&nbsp;бюджет.</p>
+      <div class="form-grid">
+        <div class="field"><label for="c1">Компания</label><input type="text" id="c1" required></div>
+        <div class="field"><label for="c2">Ваше имя</label><input type="text" id="c2" required></div>
+        <div class="field"><label for="c3">Сколько подарков</label><input type="number" id="c3" min="1" placeholder="Например, 30"></div>
+        <div class="field"><label for="c4">Бюджет на&nbsp;один подарок, ₽</label><input type="number" id="c4" min="0" placeholder="Например, 3000"></div>
+        <div class="field"><label for="c5">К&nbsp;какой дате нужны</label><input type="date" id="c5"></div>
+        <div class="field"><label for="c6">Телефон</label><input type="tel" id="c6" required placeholder="+7"></div>
+        <div class="field full"><label>Где&nbsp;удобнее получить ответ</label>
+          <div class="chips" id="ch">
+            <button type="button" class="chip on" data-v="wa">WhatsApp</button>
+            <button type="button" class="chip" data-v="tg">Telegram</button>
+            <button type="button" class="chip" data-v="max">MAX</button>
+            <button type="button" class="chip" data-v="call">Позвонить</button>
+          </div></div>
+      </div>
+      <button class="btn" type="submit" style="margin-top:22px">Отправить заявку</button>
+      <p class="muted" style="font-size:14px;margin:12px 0 0">Демо: заявка никуда не&nbsp;отправляется.</p>
+    </form>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="js/products.js?v=2"></script>
+<script src="js/main.js?v=2"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('goods').innerHTML = PRODUCTS.filter(p => p.who.includes('work')).slice(0, 4).map(cardHTML).join('');
+  document.querySelectorAll('#ch .chip').forEach(b => b.onclick = () => document.querySelectorAll('#ch .chip').forEach(x => x.classList.toggle('on', x === b)));
+  document.getElementById('f').onsubmit = e => { e.preventDefault(); e.target.reset(); toast('Заявка отправлена (демо)'); };
+});
+</script>
+</body>
+</html>

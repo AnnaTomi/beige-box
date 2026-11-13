@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Товар — BEIGE BOX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="css/style.css?v=2">
+</head>
+<body data-page="product">
+<div id="site-header"></div>
+
+<div class="wrap page-head" style="padding-bottom:18px">
+  <div class="crumbs" id="crumbs"></div>
+</div>
+<div class="wrap pp" id="pp"></div>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><h2>С&nbsp;этим часто&nbsp;берут</h2></div></div>
+    <div class="goods" id="more"></div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="js/products.js?v=2"></script>
+<script src="js/main.js?v=2"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const p = byId(qs.get('id')) || PRODUCTS[0];
+  const cat = CATS.find(c => c.id === p.cat);
+  document.title = p.name + ' — BEIGE BOX';
+  document.body.dataset.page = p.cat;
+  paintChrome(p.cat);
+  document.getElementById('crumbs').innerHTML = `<a href="index.html">Главная</a> / <a href="catalog.html?cat=${p.cat}">${cat.name}</a> / ${p.name}`;
+
+  const sized = p.sizes && p.sizes.length;
+  let size = sized ? (p.sizes.find(s => (p.stock[s] || 0) > 0) || '') : '';
+  let qty = 1;
+  const tags = [...p.who.map(w => WHO[w]), ...p.occ.map(o => OCC[o])];
+  const items = (p.items || []).map(x => x.replace(/^подарочн(ая|ый)\s/i, m => m));
+
+  document.getElementById('pp').innerHTML = `
+    <div class="gal">
+      <div class="thumbs">${p.photos.map((f, i) => `<button type="button" class="${i ? '' : 'on'}" data-i="${i}"><img src="${f}" alt=""></button>`).join('')}</div>
+      <div class="main-img"><img id="main" src="${p.photos[0]}" alt="${p.name}"></div>
+    </div>
+    <div>
+      ${p.badge ? `<span class="demo" style="margin-bottom:12px">${p.badge === 'hit' ? 'Хит продаж' : 'Новинка'}</span>` : ''}
+      <h1>${nb(p.name)}</h1>
+      ${tags.length ? `<div class="chips" style="margin-bottom:6px">${tags.map(t => `<span class="demo">${t}</span>`).join('')}</div>` : ''}
+      <div class="price">${RUB(p.price)}</div>
+
+      ${items.length ? `<div class="box-list"><h4>Что внутри</h4><ul>${items.map(i => `<li>${nb(i)}</li>`).join('')}</ul></div>`
+        : `<div class="box-list"><h4>Описание</h4><ul>${p.comp ? `<li>Состав: ${p.comp}</li>` : ''}${p.color ? `<li>Цвет: ${p.color}</li>` : ''}</ul></div>`}
+
+      ${sized ? `<div class="opt"><h4>Размер <a href="#sizes" class="muted" style="font-weight:500;font-size:13.5px;margin-left:8px" id="size-link">Таблица размеров</a></h4>
+        <div class="sizes">${p.sizes.map(s => `<button type="button" class="size${s === size ? ' on' : ''}" data-s="${s}" ${(p.stock[s] || 0) > 0 ? '' : 'disabled title="Нет в наличии"'}>${s}</button>`).join('')}</div>
+        <div class="stock" id="stock"></div>
+        <div class="need" id="sizes" style="margin-top:12px;display:none"><i class="ti ti-ruler-2"></i><div><b>Нужно от&nbsp;вас:</b> таблица размеров пижам (обхват груди, бёдер, длина). Покажем её&nbsp;здесь, чтобы не&nbsp;приходилось спрашивать в&nbsp;сообщениях.</div></div>
+      </div>` : `<div class="stock" style="margin:-8px 0 20px"><span class="dot"></span>В&nbsp;наличии <span class="demo">для примера</span></div>`}
+
+      ${p.cat === 'gifts' ? `<div class="opt">
+        <label class="chk"><input type="checkbox" id="card-on"> Подписать открытку вашим текстом</label>
+        <div class="card-text" id="card-box"><textarea id="card-txt" maxlength="200" placeholder="Например: С&nbsp;Новым годом! Пусть будет тепло и&nbsp;уютно. Маша"></textarea>
+        <p class="muted" style="font-size:14px;margin-top:6px">Предложение: подписываем открытку от&nbsp;руки и&nbsp;кладём в&nbsp;набор. Если подарок едет сразу получателю&nbsp;— он&nbsp;увидит ваши&nbsp;слова.</p></div>
+      </div>` : ''}
+
+      <div class="buy">
+        <div class="qty"><button type="button" id="minus" aria-label="Меньше">−</button><span id="q">1</span><button type="button" id="plus" aria-label="Больше">+</button></div>
+        <button class="btn" type="button" id="add"><i class="ti ti-shopping-bag-plus"></i>В&nbsp;корзину</button>
+      </div>
+
+      <div class="pp-info">
+        <div><i class="ti ti-truck-delivery"></i><span>Бесплатная доставка от&nbsp;500&nbsp;₽: СДЭК, Яндекс Доставка или&nbsp;пункт выдачи Ozon</span></div>
+        <div><i class="ti ti-clock"></i><span>Соберём за&nbsp;2–3&nbsp;рабочих дня, перед праздниками&nbsp;— до&nbsp;5</span></div>
+        <div><i class="ti ti-message-circle"></i><span>Есть вопрос? Напишите в&nbsp;<a href="${WA}" target="_blank" rel="noopener">WhatsApp</a>, <a href="${TG}" target="_blank" rel="noopener">Telegram</a> или&nbsp;<a href="${MAX}" target="_blank" rel="noopener">MAX</a></span></div>
+      </div>
+    </div>`;
+
+  document.querySelectorAll('.thumbs button').forEach(b => b.onclick = () => {
+    document.getElementById('main').src = p.photos[b.dataset.i];
+    document.querySelectorAll('.thumbs button').forEach(x => x.classList.toggle('on', x === b));
+  });
+  function paintStock() {
+    const el = document.getElementById('stock'); if (!el) return;
+    const n = p.stock[size] || 0;
+    el.className = 'stock' + (n <= 2 ? ' low' : '');
+    el.innerHTML = size ? `<span class="dot"></span>${n <= 2 ? `Осталось ${n}&nbsp;шт.` : 'В наличии'} <span class="demo">для примера</span>` : 'Нет в наличии ни одного размера';
+  }
+  paintStock();
+  document.querySelectorAll('.size').forEach(b => b.onclick = () => {
+    size = b.dataset.s;
+    document.querySelectorAll('.size').forEach(x => x.classList.toggle('on', x === b));
+    paintStock();
+  });
+  const sl = document.getElementById('size-link');
+  if (sl) sl.onclick = e => { e.preventDefault(); const s = document.getElementById('sizes'); s.style.display = s.style.display === 'none' ? 'flex' : 'none'; };
+  const co = document.getElementById('card-on');
+  if (co) co.onchange = () => document.getElementById('card-box').classList.toggle('on', co.checked);
+  document.getElementById('minus').onclick = () => { qty = Math.max(1, qty - 1); document.getElementById('q').textContent = qty; };
+  document.getElementById('plus').onclick = () => { qty = Math.min(20, qty + 1); document.getElementById('q').textContent = qty; };
+  document.getElementById('add').onclick = () => {
+    if (sized && !size) { toast('Выберите размер'); return; }
+    const note = co && co.checked ? document.getElementById('card-txt').value.trim() : '';
+    cartAdd(p.id, size, note, qty);
+  };
+
+  // похожие: тот же раздел, потом общий повод
+  const more = PRODUCTS.filter(x => x.id !== p.id && x.cat === p.cat)
+    .concat(PRODUCTS.filter(x => x.id !== p.id && x.cat !== p.cat && x.occ.some(o => p.occ.includes(o))))
+    .slice(0, 4);
+  document.getElementById('more').innerHTML = more.map(cardHTML).join('');
+});
+</script>
+</body>
+</html>
