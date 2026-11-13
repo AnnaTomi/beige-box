@@ -128,11 +128,11 @@ let cur = 0, prevOff = [];
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 function layout() {
   const m = innerWidth <= 760, w = cards[0].offsetWidth;
-  const gap = w * (m ? .62 : .78), deg = m ? 26 : 22, vis = m ? 2 : 3;
+  const gap = w * (m ? .62 : .94), deg = m ? 26 : 22, vis = m ? 2 : 3;
   tr.style.height = Math.max(...cards.map(k => k.offsetHeight)) + (m ? 24 : 40) + 'px';
   cards.forEach((k, i) => {
     let o = ((i - cur) % N + N) % N; if (o > N / 2) o -= N;
-    const a = Math.abs(o), x = Math.sign(o) * gap * (a - a * (a - 1) * .09);
+    const a = Math.abs(o), x = Math.sign(o) * gap * (a - a * (a - 1) * .07);
     if (prevOff[i] !== undefined && Math.abs(o - prevOff[i]) > 1) { k.style.transition = 'none'; requestAnimationFrame(() => requestAnimationFrame(() => k.style.transition = '')); }
     prevOff[i] = o;
     k.style.transform = `translateX(${x}px) rotateY(${-o * deg}deg) scale(${1 - a * .1})`;
