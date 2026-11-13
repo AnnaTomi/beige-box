@@ -238,7 +238,7 @@ label.chk input{width:18px;height:18px;accent-color:var(--dark)}
 
 /* текстовые страницы */
 .text-page{padding-bottom:80px}
-.text-page p{max-width:72ch}
+.text-page p,.text-page li{max-width:72ch}
 .text-page h2{font-size:24px;margin:34px 0 14px}
 .text-page ul{padding-left:20px}
 .text-page li{margin-bottom:6px}
