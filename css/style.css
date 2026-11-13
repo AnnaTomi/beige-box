@@ -338,6 +338,7 @@ footer{background:var(--cream);padding:90px 0 0;overflow:hidden;margin-top:120px
 .word .w span{display:inline-block}
 .word .s{color:#f7f1e8}
 .word .o{color:transparent;-webkit-text-stroke:1.4px rgba(247,241,232,.95)}
+.word .gap{width:.28em}
 .side{position:absolute;right:0;top:2%;width:118px;margin:0;text-align:right;font:400 17px/1.4 var(--serif);color:rgba(247,241,232,.9)}
 .hero-row{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
 .hero h1{font-size:44px;line-height:1.08;max-width:12em}
@@ -393,9 +394,11 @@ footer{background:var(--cream);padding:90px 0 0;overflow:hidden;margin-top:120px
 .ny-title{text-align:center;font-size:132px;line-height:1;letter-spacing:-.02em;color:#fbf6ef}
 .ny .sub{color:#f3eadf;text-align:center;margin-top:6px}
 .car{position:relative;margin-top:46px}
-.track{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:10px max(40px,calc((100vw - var(--wrap))/2 + 40px));perspective:1400px}
-.track::-webkit-scrollbar{display:none}
-.track .card{flex:0 0 264px;scroll-snap-align:center;transition:transform .5s;box-shadow:none}
+.track{position:relative;height:520px;perspective:1600px;touch-action:pan-y;user-select:none}
+.track .card{position:absolute;left:50%;top:20px;width:284px;margin-left:-142px;transition:transform .8s cubic-bezier(.22,.8,.24,1),opacity .5s,box-shadow .8s;box-shadow:0 14px 30px -24px rgba(40,30,20,.5);will-change:transform}
+.track .card.on{box-shadow:0 34px 60px -30px rgba(40,30,20,.6)}
+.track .card:not(.on){cursor:pointer}
+.track .card:not(.on) .go{pointer-events:none}
 .round{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:54px;height:54px;border-radius:50%;border:0;background:#fff;color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 30px rgba(40,30,20,.2)}
 .round:hover{background:var(--cream)}
 .round svg{width:20px;height:20px}
@@ -500,8 +503,7 @@ footer{background:var(--cream);padding:90px 0 0;overflow:hidden;margin-top:120px
   .ny{margin-top:72px;border-radius:36px 36px 0 0;padding:48px 0 54px}
   .ny-title{font-size:58px}
   .car{margin-top:28px}
-  .track{gap:12px;padding:6px 16px}
-  .track .card{flex-basis:74%}
+  .track .card{width:64vw;margin-left:-32vw;top:12px}
   .round{display:none}
   .ny .all{margin-top:30px;padding:0 16px}
   .ny .all .btn{width:100%}

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Forum&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1">
+<link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body class="home" data-page="index">
 <div id="site-header"></div>
@@ -21,8 +21,7 @@
   </picture>
   <div class="hero-in">
     <div class="word" aria-hidden="true">
-      <span class="w" id="word"><span class="s">B</span><span class="s">E</span><span class="o">I</span><span class="o">G</span><span class="s">E</span></span>
-      <p class="side">Красота,<br>которая говорит<br>тише.</p>
+      <span class="w" id="word"><span class="s">B</span><span class="s">E</span><span class="o">I</span><span class="o">G</span><span class="s">E</span><span class="gap"></span><span class="o">B</span><span class="o">O</span><span class="o">X</span></span>
     </div>
 
     <div class="hero-row">
@@ -123,24 +122,52 @@
 const NY = ['b03','b04','b12','b05','b08','b09','b07','b10'].map(byId).filter(Boolean);
 const tr = document.getElementById('track');
 tr.innerHTML = NY.map(cardHTML).join('');
-const step = () => tr.querySelector('.card').offsetWidth + 22;
-document.getElementById('prev').onclick = () => tr.scrollBy({ left: -step(), behavior: 'smooth' });
-document.getElementById('next').onclick = () => tr.scrollBy({ left: step(), behavior: 'smooth' });
-
-/* лёгкий поворот крайних карточек */
-function tilt() {
-  const c = tr.getBoundingClientRect(), mid = c.left + c.width / 2;
-  tr.querySelectorAll('.card').forEach(k => {
-    const r = k.getBoundingClientRect(), a = Math.max(-1, Math.min(1, (r.left + r.width / 2 - mid) / (c.width / 2)));
-    k.style.transform = innerWidth > 760 ? `rotateY(${-a * 14}deg) scale(${1 - Math.abs(a) * .06})` : '';
+/* карусель-«веер»: центральная карточка крупно, боковые меньше и повёрнуты к центру */
+const cards = [...tr.querySelectorAll('.card')], N = cards.length;
+let cur = 0, prevOff = [];
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function layout() {
+  const m = innerWidth <= 760, w = cards[0].offsetWidth;
+  const gap = w * (m ? .62 : .78), deg = m ? 26 : 22, vis = m ? 2 : 3;
+  tr.style.height = Math.max(...cards.map(k => k.offsetHeight)) + (m ? 24 : 40) + 'px';
+  cards.forEach((k, i) => {
+    let o = ((i - cur) % N + N) % N; if (o > N / 2) o -= N;
+    const a = Math.abs(o), x = Math.sign(o) * gap * (a - a * (a - 1) * .09);
+    if (prevOff[i] !== undefined && Math.abs(o - prevOff[i]) > 1) { k.style.transition = 'none'; requestAnimationFrame(() => requestAnimationFrame(() => k.style.transition = '')); }
+    prevOff[i] = o;
+    k.style.transform = `translateX(${x}px) rotateY(${-o * deg}deg) scale(${1 - a * .1})`;
+    k.style.zIndex = 10 - a;
+    k.style.opacity = a > vis ? 0 : 1;
+    k.style.pointerEvents = a > vis ? 'none' : '';
+    k.classList.toggle('on', o === 0);
   });
 }
-tr.addEventListener('scroll', () => requestAnimationFrame(tilt), { passive: true });
+const go = d => { cur = (cur + d + N) % N; layout(); };
+document.getElementById('prev').onclick = () => { go(-1); hold(); };
+document.getElementById('next').onclick = () => { go(1); hold(); };
+/* клик по боковой карточке — сначала выводим её в центр */
+cards.forEach((k, i) => k.addEventListener('click', e => {
+  if (moved) { e.preventDefault(); return; }
+  if (i !== cur) { e.preventDefault(); let d = i - cur; if (d > N / 2) d -= N; if (d < -N / 2) d += N; go(d); hold(); }
+}, true));
+/* свайп пальцем и перетаскивание мышью */
+let sx = null, moved = false;
+tr.addEventListener('pointerdown', e => { sx = e.clientX; moved = false; });
+tr.addEventListener('pointermove', e => { if (sx !== null && Math.abs(e.clientX - sx) > 10) moved = true; });
+addEventListener('pointerup', e => { if (sx === null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 40) { go(dx < 0 ? 1 : -1); hold(); } setTimeout(() => moved = false, 0); });
+tr.addEventListener('dragstart', e => e.preventDefault());
+/* сама листается раз в 4 секунды, замирает под курсором */
+let timer = null, paused = false;
+const tick = () => { clearInterval(timer); if (!RM) timer = setInterval(() => { if (!paused && !document.hidden) go(1); }, 4000); };
+const hold = tick;
+tr.addEventListener('mouseenter', () => paused = true);
+tr.addEventListener('mouseleave', () => paused = false);
+tick();
 
 /* преимущества на телефоне — та же четвёрка */
 document.getElementById('perksM').innerHTML = document.getElementById('perks').innerHTML;
 
-function fitHero() { fitWord(document.getElementById('word'), document.querySelector('.word'), innerWidth <= 760 ? 1 : .74); tilt(); }
+function fitHero() { fitWord(document.getElementById('word'), document.querySelector('.word'), innerWidth <= 760 ? 1 : .92); layout(); }
 addEventListener('resize', fitHero);
 fitHero();
 if (document.fonts) document.fonts.ready.then(fitHero);
