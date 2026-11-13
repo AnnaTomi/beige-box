@@ -331,3 +331,4 @@ footer .msg:hover{background:none}
 input,select,textarea{max-width:100%;min-width:0}
 .form-pad{padding:34px}
 @media (max-width:600px){.form-pad,.form-block{padding:20px}}
+.nw{white-space:nowrap}
